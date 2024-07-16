@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+div {
+  padding: 20px;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+input {
+  margin-right: 10px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px 0;
+}
+
+@media (max-width: 600px) {
+  input, button {
+      width: 100%;
+      margin-bottom: 10px;
+  }
+}
