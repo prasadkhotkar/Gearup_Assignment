@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/service-crud', {
+mongoose.connect(`${process.env.MONGODB_URL}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
