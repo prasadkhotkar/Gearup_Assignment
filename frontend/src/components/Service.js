@@ -14,52 +14,30 @@ const Service = () => {
     }, []);
 
     const fetchServices = async () => {
-        try {
-            const response = await axios.get('/services');
-            if (Array.isArray(response.data)) {
-                setServices(response.data);
-            } else {
-                console.error('Expected array but got:', response.data);
-                setServices([]);
-            }
-        } catch (error) {
-            console.error('Error fetching services:', error);
-            setServices([]);
-        }
+        const response = await axios.get('/services');
+        setServices(response.data);
     };
 
     const addService = async (e) => {
         e.preventDefault();
         const newService = { name, description, role };
-        try {
-            const response = await axios.post('/services', newService);
-            setServices([...services, response.data]);
-            clearForm();
-        } catch (error) {
-            console.error('Error adding service:', error);
-        }
+        const response = await axios.post('/services', newService);
+        setServices([...services, response.data]);
+        clearForm();
     };
 
     const updateService = async (e) => {
         e.preventDefault();
         const updatedService = { name, description, role };
-        try {
-            await axios.patch(`/services/${editingService._id}`, updatedService);
-            fetchServices();
-            clearForm();
-            setEditingService(null);
-        } catch (error) {
-            console.error('Error updating service:', error);
-        }
+        await axios.patch(`/services/${editingService._id}`, updatedService);
+        fetchServices();
+        clearForm();
+        setEditingService(null);
     };
 
     const deleteService = async (id) => {
-        try {
-            await axios.delete(`/services/${id}`);
-            fetchServices();
-        } catch (error) {
-            console.error('Error deleting service:', error);
-        }
+        await axios.delete(`/services/${id}`);
+        fetchServices();
     };
 
     const clearForm = () => {
@@ -112,23 +90,19 @@ const Service = () => {
                 <button type="submit">{editingService ? 'Update Service' : 'Add Service'}</button>
             </form>
             <ul className="service-list">
-                {Array.isArray(services) ? (
-                    services.map((service) => (
-                        <li key={service._id} className="service-item">
-                            <div className="service-details">
-                                <span className="service-name">{service.name}</span>
-                                <span className="service-description">{service.description}</span>
-                                <span className="service-role">{service.role}</span>
-                            </div>
-                            <div className="service-actions">
-                                <button onClick={() => handleEdit(service)}>Edit</button>
-                                <button onClick={() => deleteService(service._id)} className="delete">Delete</button>
-                            </div>
-                        </li>
-                    ))
-                ) : (
-                    <li>No services available</li>
-                )}
+                {services.map((service) => (
+                    <li key={service._id} className="service-item">
+                        <div className="service-details">
+                            <span className="service-name">{service.name}</span>
+                            <span className="service-description">{service.description}</span>
+                            <span className="service-role">{service.role}</span>
+                        </div>
+                        <div className="service-actions">
+                            <button onClick={() => handleEdit(service)}>Edit</button>
+                            <button onClick={() => deleteService(service._id)} className="delete">Delete</button>
+                        </div>
+                    </li>
+                ))}
             </ul>
         </div>
     );
